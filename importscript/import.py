@@ -11,7 +11,7 @@ def readMovies():
         titleLookup[movie['movieId']] = movie['title']
         return titleLookup
 def readTags():
-    csvfile= open('ml-latest-small/tags.csv', 'r')
+    csvfile= open('tags.csv', 'r')
     titleLookup= readMovies()
     reader = csv.DictReader( csvfile)
     for line in reader:
@@ -23,7 +23,7 @@ def readTags():
         tag['timestamp'] = int(line['timestamp'])
         yield tag
 
-es= elasticsearch.Elasticsearch("34.222.6.59:9200")
+es= elasticsearch.Elasticsearch(['http://localhost:9200'], http_auth=('elastic', 'changeme'))
 es.indices.delete(index="tags",ignore=404)
 deque(helpers.parallel_bulk(es,readTags(),index="tags"), maxlen=0)
 es.indices.refresh()
