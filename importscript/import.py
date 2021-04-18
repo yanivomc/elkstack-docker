@@ -33,7 +33,7 @@ def readRatings():
 
 es = elasticsearch.Elasticsearch(['http://localhost:9200'], http_auth=('elastic', 'changeme'))
 
-es.indices.delete(index="ratings",ignore=404)
+#es.indices.delete(index="ratings",ignore=404) - removed delete as we are building a mapping for this index
 deque(helpers.parallel_bulk(es,readRatings(),index="ratings"), maxlen=0)
 es.indices.refresh()
 
