@@ -31,8 +31,9 @@ secret_management.encryption_keys:
 secret_management.encryption_keys: [my_first_encryption_key, my_second_encryption_key, ...]
 ```
 
-> :information_source: To generate a strong encryption key, for example using the AES-256 cipher, you can use the
-> OpenSSL utility or any other online/offline tool of your choice:
+> **Note**  
+> To generate a strong encryption key, for example using the AES-256 cipher, you can use the OpenSSL utility or any
+> other online/offline tool of your choice:
 >
 > ```console
 > $ openssl enc -aes-256 -P
@@ -57,6 +58,17 @@ add the following setting:
 xpack.security.authc.api_key.enabled: true
 ```
 
+### Configure the Enterprise Search host in Kibana
+
+Kibana acts as the [management interface][enterprisesearch-ui] to Enterprise Search.
+
+To enable the management experience for Enterprise Search, modify the Kibana configuration file in
+[`kibana/config/kibana.yml`][config-kbn] and add the following setting:
+
+```yaml
+enterpriseSearch.host: http://enterprise-search:3002
+```
+
 ### Start the server
 
 To include Enterprise Search in the stack, run Docker Compose from the root of the repository with an additional command
@@ -66,7 +78,7 @@ line argument referencing the `enterprise-search-compose.yml` file:
 $ docker-compose -f docker-compose.yml -f extensions/enterprise-search/enterprise-search-compose.yml up
 ```
 
-Allow a few minutes for the stack to start, then open your web browser at the address http://localhost:3002 to see the
+Allow a few minutes for the stack to start, then open your web browser at the address <http://localhost:3002> to see the
 Enterprise Search home page.
 
 Enterprise Search is configured on first boot with the following default credentials:
@@ -89,8 +101,9 @@ enterprise-search:
     ENT_SEARCH_DEFAULT_PASSWORD: {{some strong password}}
 ```
 
-> :warning: The default Enterprise Search password can only be set during the initial boot. Once the password is
-> persisted in Elasticsearch, it can only be changed via the Elasticsearch API.
+> **Warning**  
+> The default Enterprise Search password can only be set during the initial boot. Once the password is persisted in
+> Elasticsearch, it can only be changed via the Elasticsearch API.
 
 For more information, please refer to [User Management and Security][enterprisesearch-security].
 
@@ -122,7 +135,6 @@ Docker container: [Running Enterprise Search Using Docker][enterprisesearch-dock
 
 [Enterprise Search documentation][enterprisesearch-docs]
 
-
 [config-enterprisesearch]: ./config/enterprise-search.yml
 
 [enterprisesearch-encryption]: https://www.elastic.co/guide/en/enterprise-search/current/encryption-keys.html
@@ -130,6 +142,8 @@ Docker container: [Running Enterprise Search Using Docker][enterprisesearch-dock
 [enterprisesearch-config]: https://www.elastic.co/guide/en/enterprise-search/current/configuration.html
 [enterprisesearch-docker]: https://www.elastic.co/guide/en/enterprise-search/current/docker.html
 [enterprisesearch-docs]: https://www.elastic.co/guide/en/enterprise-search/current/index.html
+[enterprisesearch-ui]: https://www.elastic.co/guide/en/enterprise-search/current/user-interfaces.html
 
 [es-security]: https://www.elastic.co/guide/en/elasticsearch/reference/current/security-settings.html#api-key-service-settings
 [config-es]: ../../elasticsearch/config/elasticsearch.yml
+[config-kbn]: ../../kibana/config/kibana.yml
