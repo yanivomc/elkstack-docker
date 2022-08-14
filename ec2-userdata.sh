@@ -1,5 +1,6 @@
 #!/bin/bash
 mkdir /tmp/work
+rm -rf /tmp/*.logs
 cd /tmp/work/
 git clone https://github.com/yanivomc/elkstack-docker.git 2>&1 || true
 date >> /tmp/elkstack.logs
