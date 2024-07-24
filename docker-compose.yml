@@ -63,7 +63,6 @@ services:
         read_only: true
     ports:
       - "5601:5601"
-      - "80:5601"
     networks:
       - elk
     depends_on:
