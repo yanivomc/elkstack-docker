@@ -1,7 +1,12 @@
-ARG ELASTIC_VERSION
+# logGenerator.py 
+FROM python:3.7-slim as builder
+# Install dependencies from requirements.txt using pip
+COPY ./requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
 
-# https://www.docker.elastic.co/
-FROM docker.elastic.co/elasticsearch/elasticsearch:${ELASTIC_VERSION}
 
-# Add your elasticsearch plugins setup here
-# Example: RUN elasticsearch-plugin install analysis-icu
+
+FROM builder as final
+WORKDIR /app
+COPY ./logGenerator.py ./logGenerator.py
+CMD ["python", "./logGenerator.py"]
